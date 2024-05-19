@@ -1,3 +1,6 @@
+### Clone git project repository to your local system: 
+
+    git clone https://github.com/raj-kanani/Chat_System_Backend
 
 ### Create virtual environment
 
