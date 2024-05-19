@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_DATABASE: chat_db
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      - MONGO_DB_NAME=chat_db
+      - MONGO_DB_HOST=db
+      - MONGO_DB_PORT=27017
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+  celery:
+    build: .
+    command: celery -A chatapp worker --loglevel=info
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - web
+      - redis
+
+  celery-beat:
+    build: .
+    command: celery -A chatapp beat --loglevel=info
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - web
+      - redis
+
+volumes:
+  mongo_data:

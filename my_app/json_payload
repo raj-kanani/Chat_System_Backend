@@ -1,0 +1,33 @@
+# chat and message payload demo
+[
+    {
+        "id": 1,
+        "chat": 1,
+        "sender": {
+            "id": 1,
+            "username": "user1"
+        },
+        "text": "This is a scheduled message",
+        "media": null,
+        "created_at": "2024-05-16T10:00:00Z",
+        "scheduled_at": "2024-05-16T10:00:00Z",
+        "sent": true,
+        "replied_to": null,
+        "suggested_reply": "Thanks for your message!"
+    },
+    {
+        "id": 2,
+        "chat": 1,
+        "sender": {
+            "id": 2,
+            "username": "user2"
+        },
+        "text": "This message is sent immediately",
+        "media": null,
+        "created_at": "2024-05-16T10:05:00Z",
+        "scheduled_at": null,
+        "sent": true,
+        "replied_to": null,
+        "suggested_reply": "Thanks for your message!"
+    }
+]
